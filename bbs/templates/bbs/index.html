@@ -1,0 +1,72 @@
+{% extends './base.html' %}
+{% block content %}
+    <p>{{ message }}</p>
+
+    {% if searchForm %}
+        <!-- <form action='{% url "bbs:index"  %}' method='get'> -->
+        <form href="?pageNo={{pageNo}}" method='get'>
+            <div class='form-group'>
+                {{ searchForm }}
+                <input type='submit' class='btn btn-outline-primary' value='OK'>
+                <a href="?pageNo={{pageNo}}" class='btn btn-outline-secondary'>クリア</a>
+            </div>
+        </form>
+    {% endif %}
+
+    <table  class='table table-striped table-hover'>
+        <td>ID</td>
+        <td>距離[cm]</td>
+        <td>測定時刻</td>
+        <td>詳細</td>
+        {% for article in articles%}
+     
+            <tr>
+                <td>{{ article.user_name }}</td>
+                <td>{{ article.content }}cm</td>
+                <td>{{ article.time_now }}</td>
+                
+                <td>
+                    <a href='{% url "bbs:detail" article.id %}' class='btn btn-outline-primary'>詳細</a>
+                    <!-- <a href='{% url "bbs:delete" article.id %}' class='btn btn-outline-secondary'>削除</a> -->
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <div class="pager">
+        <!-- 前のページへのリンク -->
+        {% if articles.has_previous %}
+            <p>{{keyword|length}}</p>
+            {% if keyword|length  %}
+                <a  href="?pageNo={{pageNo|add:-1 }}&keyword={{keyword}}" >前へ</a>
+                
+            {% else %}
+                <a  href="?pageNo={{pageNo|add:-1 }}" >前へ</a>
+            {% endif %} 
+            
+        {% endif %}
+
+        <!-- 現在のページ番号と全体のページ数 -->
+        <span>
+            {{ articles.number }} / {{ articles.paginator.num_pages }}
+        </span>
+
+        <!-- 次のページへのリンク -->
+        {% if articles.has_next %}
+            {% if keyword|length%}
+                <a href="?pageNo={{pageNo|add:1}}&keyword={{keyword}}"">次へ</a>
+
+            {% else %}
+                <a  href="?pageNo={{pageNo|add:1 }}" >次へ</a>
+            {% endif %} 
+
+        {% endif %}
+        <h1>{{keyword}}</h1>
+        </div>
+
+
+
+    <!-- <div>
+        <a href='{% url "bbs:new" %}' class='btn btn-outline-primary'>新規</a>
+    </div> -->
+{% endblock %}

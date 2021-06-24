@@ -1,0 +1,16 @@
+{% extends './base.html' %}
+{% block content %}
+</br>
+</br>
+</br>
+    <!-- <p>{{ message }}</p> -->
+    <p>Unit_No : {{ article.user_name }}</p>
+    <p>測定距離 : {{ article.content }}cm</p>
+    <p>日付 : {{ article.day_now }}</p>
+    <p>時刻 : {{ article.time_now }}</p>
+    <div>
+        <a href='{% url "bbs:index" %}' class='btn btn-outline-primary'>一覧</a>
+        <!-- <a href='{% url "bbs:edit" article.id %}' class='btn btn-outline-primary'>編集</a> -->
+        <!-- <a href='{% url "bbs:delete" article.id %}' class='btn btn-outline-secondary'>削除</a> -->
+    </div>
+{% endblock %}
